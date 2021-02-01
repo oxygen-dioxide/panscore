@@ -69,11 +69,21 @@ def load(filename:str)->panscore.Score:
     #TODO
     pass
 
-notetemplate="[#{:0>4}]\nLength={}\nNoteNum={}\nLyric={}\n"
-
-def save(score:panscore.Score,filename:str):
+def save(score:panscore.Score,filename:str,track:int=0):
     #将panscore.Score对象保存为文件
-    #s='[#VERSION]\nUST Version1.2\nCharset=UTF-8\n[#SETTING]\n'
-    #i=0#音符序号
-    #TODO
-    pass
+    s='[#VERSION]\nUST Version1.2\nCharset=UTF-8\n[#SETTING]\n'
+    noteindex=0#音符序号
+    time=0
+    def dumpnote(length:int,notenum:int,lyric:int)->str:
+        return "[#{:0>4}]\nLength={}\nNoteNum={}\nLyric={}\n".format(noteindex,length,notenum,lyric)
+
+    tr=score.track[track]
+    for note in tr.note:
+        if(note.start>time):
+            s+=dumpnote(note.start-time,60,"R")#休止符
+            noteindex+=1
+        s+=dumpnote(note.length,note.notenum,note.lyric)
+        noteindex+=1
+        time=note.start+note.length
+    s+="[#TRACKEND]\n"
+    with open(filename,"w",encoding="utf8") as file:

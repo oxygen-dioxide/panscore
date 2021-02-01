@@ -1,4 +1,5 @@
 # Panscore
+[Github](https://github.com/oxygen-dioxide/panscore) [Gitee](https://gitee.com/oxygendioxide/panscore) [BitBucket](https://bitbucket.org/oxygendioxide/panscore/src/main/)
 
 ## 介绍
 Panscore是支持多种文件格式的数字乐谱转换器，基于python开发，可扩展。
@@ -13,11 +14,13 @@ Panscore支持输入以下文件格式：
 |文件格式|说明|备注|
 |-|-|-|
 |nn|[袅袅虚拟歌手](http://dsoundsoft.com/)|不支持汉字拼音双重歌词|
+|ust|[UTAU](http://utau2008.xrea.jp/)||
 
 Panscore支持输出以下文件格式：
 |文件格式|说明|备注|
 |-|-|-|
-|nn|[袅袅虚拟歌手](http://dsoundsoft.com/)|不支持多轨，音符量化为60（32分音符），不支持变速曲|
+|nn|[袅袅虚拟歌手](http://dsoundsoft.com/)|单轨，音符量化为60（32分音符）|
+|ust|[UTAU](http://utau2008.xrea.jp/)|单轨，音符重叠的工程目前会出现错误|
 
 ## 参与贡献
 
@@ -35,4 +38,4 @@ def load(filename:str)->panscore.Score:
 def save(score:panscore.Score,filename:str):
     #将panscore.Score对象保存为文件
 ```
-将文件命名为"<文件格式后缀名>.py"（例如mid.py），放置在panscore文件夹下。
+将文件命名为"<文件格式后缀名>.py"（例如mid.py），放置在panscore\filetypes文件夹下。

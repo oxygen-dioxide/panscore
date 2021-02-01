@@ -38,7 +38,7 @@ def dumpnote(note:panscore.Note)->str:
             "0"])+"\n"
     return s
 
-def save(score:panscore.Score,filename:str,track=0):
+def save(score:panscore.Score,filename:str,track:int=0):
     tr=score.track[track]
     tempo=120
     beats=(4,4)

@@ -1,5 +1,7 @@
-import typing
-import argparse
+__version__="0.0.1"
+
+import os
+import sys
 import importlib
 from typing import List,Tuple,Dict,Union,Type
 
@@ -7,7 +9,7 @@ def getlib(filetype:str):
     """
     输入文件类型，返回对应的读写库
     """
-    return importlib.import_module("panscore."+filetype.lower())
+    return importlib.import_module("panscore.filetypes."+filetype.lower())
 
 class Note():
     '''
@@ -58,30 +60,60 @@ class Score():
                  track:List[Track]=[]):
         self.track=track
 
-    def save(self,filename:str,filetype="",**kwargs):
+    def save(self,filename:str,filetype=None,**kwargs):
+        """
+        将panscore.Score对象保存为文件
+        filetype:文件类型，可以是字符串，如"ust"，也可以panscore.filetypes下的库，如panscore.filetypes.ust。默认按照文件后缀名。
+        """
+        if(filetype in ("",None)):
+            filetype=filename.split(".")[-1]
+            lib=getlib(filetype)
         if(type(filetype)==str):
-            if(filetype==""):
-                filetype=filename.split(".")[-1]
             lib=getlib(filetype)
         else:
             lib=filetype
         return lib.save(self,filename,**kwargs)
         pass
 
-def load(filename:str,filetype="",**kwargs)->Score:
+def load(filename:str,filetype=None,**kwargs)->Score:
     """
     打开文件，返回panscore.Score对象
+    filetype:文件类型，可以是字符串，如"ust"，也可以panscore.filetypes下的库，如panscore.filetypes.ust。默认按照文件后缀名。
     """
-    if(type(filetype)==str):
-        if(filetype==""):
-            filetype=filename.split(".")[-1]
+    if(filetype in ("",None)):
+        filetype=filename.split(".")[-1]
+        lib=getlib(filetype)
+    elif(type(filetype)==str):  
         lib=getlib(filetype)
     else:
         lib=filetype
     return lib.load(filename,**kwargs)
 
 def main():
-    pass
+    import argparse
+    parser = argparse.ArgumentParser(prog='argparse')
+    parser.add_argument("files")
+    parser.add_argument("-f","--from", help="输入文件格式")
+    parser.add_argument("-t","--to", help="输出文件格式")
+    parser.add_argument("-o","--output", help="输出文件名")
+    parser.add_argument("-v","--version",action='store_true',help="显示程序版本")
+    #parser.add_argument("--list-input-formats",action='store_true',help="显示支持的输入文件格式")
+    #parser.add_argument("--list-output-formats",action='store_true',help="显示支持的输出文件格式")
+    args = parser.parse_args().__dict__
+    if(args["version"]):
+        print(__version__)
+    elif(args["list-input-formats"]):
+        #列出所有支持的输入文件格式，尚未实现
+        pass
+    elif(args["list-output-formats"]):
+        #列出所有支持的输出文件格式，尚未实现
+        pass
+    else:
+        import ipdb
+        ipdb.set_trace()
+        file=args["files"]
+        load(file,filetype=args["from"]).save(args["output"],filetype=args["to"])
+        #TODO
 
 if(__name__=="__main__"):
     main()
