@@ -87,3 +87,4 @@ def save(score:panscore.Score,filename:str,track:int=0):
         time=note.start+note.length
     s+="[#TRACKEND]\n"
     with open(filename,"w",encoding="utf8") as file:
+        file.write(s)
