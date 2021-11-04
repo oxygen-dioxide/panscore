@@ -1,11 +1,13 @@
-__version__="0.0.1"
+__version__="0.0.2"
 
 import os
 import sys
 import importlib
 from typing import List,Tuple,Dict,Union,Type
 
-def getlib(filetype:str):
+defaultlyric=""
+
+def getlibfromfiletype(filetype:str):
     """
     输入文件类型，返回对应的读写库
     """
@@ -67,9 +69,9 @@ class Score():
         """
         if(filetype in ("",None)):
             filetype=filename.split(".")[-1]
-            lib=getlib(filetype)
+            lib=getlibfromfiletype(filetype)
         if(type(filetype)==str):
-            lib=getlib(filetype)
+            lib=getlibfromfiletype(filetype)
         else:
             lib=filetype
         return lib.save(self,filename,**kwargs)
@@ -82,9 +84,9 @@ def load(filename:str,filetype=None,**kwargs)->Score:
     """
     if(filetype in ("",None)):
         filetype=filename.split(".")[-1]
-        lib=getlib(filetype)
+        lib=getlibfromfiletype(filetype)
     elif(type(filetype)==str):  
-        lib=getlib(filetype)
+        lib=getlibfromfiletype(filetype)
     else:
         lib=filetype
     return lib.load(filename,**kwargs)
@@ -92,7 +94,7 @@ def load(filename:str,filetype=None,**kwargs)->Score:
 def main():
     import argparse
     parser = argparse.ArgumentParser(prog='argparse')
-    parser.add_argument("files")
+    parser.add_argument("files",help="输入文件名")
     parser.add_argument("-f","--from", help="输入文件格式")
     parser.add_argument("-t","--to", help="输出文件格式")
     parser.add_argument("-o","--output", help="输出文件名")
@@ -102,15 +104,9 @@ def main():
     args = parser.parse_args().__dict__
     if(args["version"]):
         print(__version__)
-    elif(args["list-input-formats"]):
-        #列出所有支持的输入文件格式，尚未实现
-        pass
-    elif(args["list-output-formats"]):
-        #列出所有支持的输出文件格式，尚未实现
-        pass
     else:
-        import ipdb
-        ipdb.set_trace()
+        #import ipdb
+        #ipdb.set_trace()
         file=args["files"]
         load(file,filetype=args["from"]).save(args["output"],filetype=args["to"])
         #TODO

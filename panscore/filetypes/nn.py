@@ -1,6 +1,9 @@
 import panscore
 
 def load(filename:str)->panscore.Score:
+    """
+    打开nn文件，返回panscore.Score对象
+    """
     with open(filename,"r",encoding="utf8") as file:
         line=file.readline().split(" ")
         tempo=float(line[0])
@@ -18,6 +21,7 @@ def load(filename:str)->panscore.Score:
                                  length=length,
                                  notenum=notenum,
                                  lyric=pinyin)]
+            #TODO:支持选择汉字还是拼音
     return panscore.Score(track=[panscore.Track(note=note)])
     pass
 
@@ -39,6 +43,9 @@ def dumpnote(note:panscore.Note)->str:
     return s
 
 def save(score:panscore.Score,filename:str,track:int=0):
+    """
+    将panscore.Score对象保存为nn文件
+    """
     tr=score.track[track]
     tempo=120
     beats=(4,4)

@@ -1,4 +1,5 @@
 import panscore
+
 def load(filename:str)->panscore.Score:
     #打开文件，返回panscore.Score对象
     #由于编码不确定，先用二进制打开文件
