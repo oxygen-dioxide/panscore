@@ -17,9 +17,9 @@ Panscore支持输入以下文件格式：
 |mid|MIDI|mido||
 |nn|[袅袅虚拟歌手](http://dsoundsoft.com/)||不支持汉字拼音双重歌词|
 |sk|Sharpkey||不支持汉字拼音双重歌词|
-|svip|[X Studio](studiovoice.msxiaobing.com)|pythonnet||
-|ust|[UTAU](http://utau2008.xrea.jp/)|||
-|ustx|[OpenUTAU](https://github.com/stakira/OpenUtau)|pyyaml||
+|ust|[UTAU](http://utau2008.xrea.jp/)||
+|ustx|[OpenUTAU](https://github.com/stakira/OpenUtau)|||
+|vspx|VocalSharp|||
 
 Panscore支持输出以下文件格式：
 |文件格式|说明|依赖库|备注|
@@ -28,8 +28,9 @@ Panscore支持输出以下文件格式：
 |mid|MIDI|mido||
 |nn|[袅袅虚拟歌手](http://dsoundsoft.com/)||单轨，音符量化为60（32分音符）|
 |sk|Sharpkey|||
-|svip|[X Studio](studiovoice.msxiaobing.com)|||
 |ust|[UTAU](http://utau2008.xrea.jp/)||单轨，含有音符重叠的工程目前会出现错误|
+|ustx|[OpenUTAU](https://github.com/stakira/OpenUtau)|||
+|vspx|VocalSharp|||
 
 ## 参与贡献
 
